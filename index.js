@@ -1,8 +1,8 @@
 // Octokit.js
 // https://github.com/octokit/core.js#readme
-const {Octokit} = require("octokit")
+const {Octokit} = require('octokit')
 const octokit = new Octokit({
-    auth: require("./config.json").token
+    auth: require('./config.json').token
 })
 
 async function main() {
@@ -14,9 +14,12 @@ async function main() {
         }
     })
 
+    console.log(response.data);
     const pushDates = response.data
-        .filter(event => event.type === "PushEvent")
-        .map(event => event.created_at);
+        .filter(event => event.type === 'PushEvent')
+        .map(event => Date(event.created_at).toLocaleString('en-US',{
+            timeZone: 'America/Los_Angeles'
+        }));
 
     console.log(pushDates);
 };
